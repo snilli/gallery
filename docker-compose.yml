@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+    restart: always
+    ports:
+      - 4000:3000
+    networks:
+      - sweet_app_network
+
+  cms-headless:
+    container_name: cms-headless
+    build:
+      context: .
+      dockerfile: ./apps/cms-headless/Dockerfile
+    restart: unless-stopped
+    env_file: ./apps/cms-headless/.env
+    # volumes:
+    #   - ./config:/app/apps/cms-headless/config
+    #   - ./src:/app/apps/cms-headless/src
+    #   # - ./package.json:/pac/appskage.json
+    #   # - ./yarn.lock:/yar/appsn.lock
+    #   # - ./.env:/app/apps/.env
+    #   - ./public/uploads:/app/apps/cms-headless/public/uploads
+    ports:
+      - '1337:1337'
+    networks:
+      - sweet_app_network
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  sweet_app_network:
+    external: true

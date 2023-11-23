@@ -1,0 +1,57 @@
+name: Docker
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+    deploy:
+        name: Setup Gcloud Account
+        runs-on: ubuntu-latest
+        env:
+          WEB_IMAGE_NAME: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/sweet/${{ secrets.GCP_WEB_APP_NAME }}
+          CMS_HEADLESS_IMAGE_NAME: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/sweet/${{ secrets.GCP_CMS_HEADLESS_APP_NAME }}
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Extract version
+          id: extract_version
+          uses: Saionaro/extract-package-version@v1.2.1
+          with:
+            path: apps/cms-headless
+
+        - name: Setup GCP Auth
+          id: auth
+          uses: 'google-github-actions/auth@v1'
+          with:
+            credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+        - name: 'Set up Cloud SDK'
+          uses: google-github-actions/setup-gcloud@v1
+
+        - name: Configure Docker
+          run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+
+        - name: Build Docker image
+          env:
+            TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+            TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+          run: >
+              docker build -f ./apps/cms-headless/Dockerfile .
+              -t $CMS_HEADLESS_IMAGE_NAME:${{ steps.extract_version.outputs.version }}
+              --build-arg TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
+              --build-arg TURBO_TEAM=${{ secrets.TURBO_TEAM }}
+
+        - name: Push Docker image
+          run: docker push $CMS_HEADLESS_IMAGE_NAME:${{ steps.extract_version.outputs.version }}
+
+        - name: Deploy Docker image
+          run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $CMS_HEADLESS_IMAGE_NAME --region ${{ secrets.GCP_REGION }} --platform managed --port 1337
+
+
+
+

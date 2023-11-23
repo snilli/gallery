@@ -1,0 +1,25 @@
+{
+	"name": "plugin-tailwind",
+	"version": "0.0.1",
+	"private": true,
+	"main": "src/index.js",
+	"dependencies": {
+		"tailwindcss": "^3.3.5"
+	},
+	"devDependencies": {
+		"eslint-config-share": "workspace:*",
+		"prettier-config": "workspace:*",
+		"tsconfig": "workspace:*",
+		"typescript": "^5.3.2"
+	},
+	"scripts": {
+		"clean": "rm -rf dist",
+		"build:lib": "npm run clean && tsc -p tsconfig.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"volta": {
+		"node": "20.9.0"
+	}
+}
