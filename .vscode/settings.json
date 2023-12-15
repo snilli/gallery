@@ -47,4 +47,10 @@
         "editor.defaultFormatter": "Prisma.prisma",
         "editor.formatOnSave": true,
       },
+      "[javascript][javascriptreact][typescript][typescriptreact]": {
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit",
+          "source.fixAll": "explicit"
+        }
+      },
 }

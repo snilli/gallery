@@ -1,23 +1,22 @@
 import { nextui } from '@nextui-org/theme'
 import path from 'path'
+import plugins from 'plugin-tailwind'
 import { withTV } from 'tailwind-variants/dist/transformer'
-
+import { Config } from 'tailwindcss'
 /** @type {import('tailwindcss').Config} */
 
-module.exports = withTV({
+const config: Config = withTV({
 	content: [
-		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
-		'./components/**/*.{js,ts,jsx,tsx,mdx}',
-		'./app/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 		path.join(path.dirname(require.resolve('@nextui-org/theme')), '**/*.{js,ts,jsx,tsx}'),
 	],
 	theme: {
 		extend: {},
 	},
 	darkMode: 'class',
-	plugins: [
-		require(path.join(path.dirname(require.resolve('plugin-tailwind')), 'selector')),
-		require(path.join(path.dirname(require.resolve('plugin-tailwind')), 'animate')),
-		nextui(),
-	],
+	plugins: [plugins.selector, plugins.animate, nextui()],
 })
+
+export default config

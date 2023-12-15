@@ -1,11 +1,9 @@
-import D from 'containers/a'
+import { Calculator } from '@/components/Calculator'
 
 export default function A() {
 	return (
 		<>
-			{' '}
-			<div>dsds</div>
-			<D></D>{' '}
+			<Calculator />
 		</>
 	)
 }

@@ -1,6 +1,9 @@
-import * as animate from './animate'
-import * as selector from './selector'
-module.exports = {
+import animate from './animate'
+import selector from './selector'
+
+const modules = {
 	animate,
 	selector,
 }
+
+export default modules

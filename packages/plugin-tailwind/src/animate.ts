@@ -14,7 +14,7 @@ function filterDefault<T extends Record<string, string> | undefined>(values: T) 
 	return res
 }
 
-module.exports = plugin(
+export default plugin(
 	({ addUtilities, matchUtilities, theme }) => {
 		addUtilities({
 			'@keyframes enter': theme('keyframes.enter'),
@@ -191,5 +191,3 @@ module.exports = plugin(
 		},
 	},
 )
-
-;('on-hold(rotate-x-[] rotate-y-[])')

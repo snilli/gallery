@@ -8,4 +8,5 @@ module.exports = {
 	endOfLine: 'auto',
 	useTabs: true,
 	printWidth: 120,
+	plugins: ['prettier-plugin-tailwindcss'],
 }

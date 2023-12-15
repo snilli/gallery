@@ -2,7 +2,8 @@
 	"name": "plugin-tailwind",
 	"version": "0.0.1",
 	"private": true,
-	"main": "src/index.js",
+	"main": "src/index.ts",
+	"types": "src/index.ts",
 	"dependencies": {
 		"tailwindcss": "^3.3.5"
 	},

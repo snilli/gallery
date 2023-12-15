@@ -1,6 +1,6 @@
 import plugin from 'tailwindcss/plugin'
 
-module.exports = plugin(({ addVariant, matchVariant }) => {
+export default plugin(({ addVariant, matchVariant }) => {
 	addVariant(':after', '&::after')
 	addVariant(':before', '&::before')
 	matchVariant('nth', (value) => {
